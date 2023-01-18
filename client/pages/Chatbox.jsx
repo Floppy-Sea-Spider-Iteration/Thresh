@@ -30,7 +30,6 @@ useEffect(() => {
                     {data[i].fullName} {data[i].chatText} {data[i].createDate}
                 </div>)
         }
-
         // if (data) { 
         //     setallMessages((allMessages) => {
         //         for (let i=0; i<data.length; i++) {
