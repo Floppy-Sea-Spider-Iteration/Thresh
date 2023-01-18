@@ -82,7 +82,7 @@ usersController.createUser = (req,res,next) => {
     db.query(text, values)
     .then(data => {
         console.log(data.rows)
-        res.locals.newUser = data.rows
+        res.locals.oneUser = data.rows[0];
         return next()
     })
 }
@@ -139,7 +139,7 @@ usersController.updateUser = (req,res,next) => {
 //         }
 
 usersController.setID = (req, res, next) => {
-    const id = res.locals.oneUser.id;
+    const id = res.locals.oneUser._id;
     console.log(id)
     res.cookie('ID', id, {httpOnly: true});
     return next()

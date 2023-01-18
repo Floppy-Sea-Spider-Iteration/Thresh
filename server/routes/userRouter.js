@@ -14,7 +14,7 @@ router.post('/login', userController.getUser, userController.setID,  (req, res, 
   // res.redirect(302, '/api/dashboard')
 });
 //CREATE ONE USER ROUTE
-router.post('/signup', userController.getBcrypt, userController.createUser, (req, res, next) => {
+router.post('/signup', userController.getBcrypt, userController.createUser, userController.setID, (req, res, next) => {
   res.status(200).json(res.locals.newUser)
 });
 //DELETE ONE USER ROUTE
