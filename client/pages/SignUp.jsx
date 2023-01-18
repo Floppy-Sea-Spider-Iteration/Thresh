@@ -25,9 +25,9 @@ export const SignUp = () => {
     //   });/
     try {
       const response = await axios.post('/api/users/signup', { firstName, lastName, password, userRole, email })
-      console.log(response.data)
+      console.log("This is the button response", response.data)
     } catch (err) {
-      console.log(err)
+      console.log("Error inside the POST signup button", err)
     }
   };
 
@@ -67,7 +67,7 @@ export const SignUp = () => {
             value={userRole}
             onChange={(e) => setuserRole(e.target.value)}
           />
-          <button>Sign Up</button>
+          <button>Sign Up</button> {/* //redirect doesnt work */}
         </form>
         <div>
           Have an account already? <br />
