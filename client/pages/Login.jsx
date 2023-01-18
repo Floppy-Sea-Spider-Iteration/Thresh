@@ -28,7 +28,7 @@ export const Login = () => {
       // const currUser =`${response.data.firstname} ${response.data.lastname}`
       // console.log(currUser)
       // setUser(currUser)
-      if (response) navigate('/dashboard');
+      if (response) navigate('/dashboard'); //Navigate to respective board here instead of dashboard
     } catch (err) {
       setError('Invalid Email/Password');
       console.log('err:', err)

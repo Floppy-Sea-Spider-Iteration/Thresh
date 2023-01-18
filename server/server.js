@@ -7,6 +7,7 @@ const taskRouter = require('./routes/taskRouter');
 const commentRouter = require('./routes/commentRouter');
 // const verifyRouter = require('./routes/verifyRouter');
 const boardRouter = require ('./routes/boardRouter');
+const chatRouter = require ('./routes/chatRouter')
 const cookieParser = require('cookie-parser');
 
 dotenv.config();
@@ -25,9 +26,8 @@ app.use('/dist', express.static(path.join(__dirname, '../dist')));
 app.use('/users', userRouter);
 app.use('/tasks', taskRouter);
 app.use('/comments', commentRouter);
-
-app.use('/board', boardRouter)
-
+app.use('/board', boardRouter);
+app.use('/chat', chatRouter);
 // GLOBAL ERROR HANDLER
 app.use((err, req, res, next) => {
   const defaultErr = {

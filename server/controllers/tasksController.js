@@ -6,8 +6,10 @@ const tasksController = {};
 
 //GET ALL TASKS CONTROLLER
 tasksController.getTasks = (req, res, next) => {
-  const text = 'SELECT * FROM task';
-    db.query(text)
+  const { boardID } = req.cookies;
+  const text = 'SELECT * FROM tasks WHERE boardID = $1';
+  const values = [boardID];
+    db.query(text, values)
     .then(data => {
        // console.log('DATA: ', data);
         //console.log('DATA.ROWS: ', data.rows);
@@ -21,8 +23,8 @@ tasksController.getTasks = (req, res, next) => {
         message: {err: 'Error in taskController.getTasks'}
       })
     })
+};
 
-}
 //GET ONE TASK CONTROLLER
 tasksController.getTask = (req, res, next) => {
   const id = req.params.id //set ID primary key in table
@@ -40,11 +42,12 @@ tasksController.getTask = (req, res, next) => {
         message: {err: 'Error in taskController.getTask'}
       })
     })
+};
 
-}
 //CREATE ONE TASK CONTROLLER
 tasksController.createTask = (req,res,next) => {
-  
+  { ID, boardID} = res.cookies;
+
   const {
     title,
     text,
@@ -54,13 +57,15 @@ tasksController.createTask = (req,res,next) => {
   
   // console.log(req.body);
 
-  const query = `INSERT INTO task (title, text)
-    VALUES($1, $2)
+  const query = `INSERT INTO tasks (title, text, userID, boardID)
+    VALUES ($1, $2, $3, $4) 
     RETURNING *`;
 
   const values = [
     title,
-    text
+    text,
+    ID,
+    boardID
     // create_date
   ]
 
