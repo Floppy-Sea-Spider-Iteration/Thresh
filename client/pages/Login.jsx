@@ -28,7 +28,7 @@ export const Login = () => {
       // const currUser =`${response.data.firstname} ${response.data.lastname}`
       // console.log(currUser)
       // setUser(currUser)
-      if (response) navigate('/dashboard'); //Navigate to respective board here instead of dashboard
+      if (response) navigate('/enterboard'); //Navigate to respective board here instead of dashboard
     } catch (err) {
       setError('Invalid Email/Password');
       console.log('err:', err)
@@ -55,8 +55,7 @@ export const Login = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button>Login</button>
-        {/* <Link to="/dashboard"><button>Login</button></Link> */}
+        <button>Login</button> {/*check if boardID matches in backend */} 
       </form>
       <div>
         {/* <Link to={{pathname: '/dashboard'}} ><button>Dashboard</button></Link> */}
