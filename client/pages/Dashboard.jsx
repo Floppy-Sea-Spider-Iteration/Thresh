@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { DragDropContext } from 'react-beautiful-dnd';
 import Column from './Column.jsx';
+import Chatbox from './Chatbox.jsx'
 
 const onDragEnd = (result, columns, setColumns) => {
   if (!result.destination) return;
@@ -112,6 +113,9 @@ const Dashboard = () => {
           })}
         </DragDropContext>
       </div>
+          <div className='items-flex-end'>
+        <Chatbox />
+          </div>
     </div>
   );
 };
