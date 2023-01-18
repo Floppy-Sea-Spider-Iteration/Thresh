@@ -28,7 +28,7 @@ tasksController.getTasks = (req, res, next) => {
 //GET ONE TASK CONTROLLER
 tasksController.getTask = (req, res, next) => {
   const id = req.params.id //set ID primary key in table
-    const text = `SELECT * FROM task WHERE id = ${id}`; 
+    const text = `SELECT * FROM task WHERE _id = ${id}`; 
     db.query(text)
     .then(data => {
         console.log('DATA ', data.rows)
@@ -46,7 +46,7 @@ tasksController.getTask = (req, res, next) => {
 
 //CREATE ONE TASK CONTROLLER
 tasksController.createTask = (req,res,next) => {
-  const { ID, boardID } = res.cookies;
+  const { ID, boardID } = req.cookies;
 
   const {
     title,
@@ -55,7 +55,8 @@ tasksController.createTask = (req,res,next) => {
     // comment_id
   } = req.body
   
-  // console.log(req.body);
+  console.log(req.body);
+  console.log(ID, boardID);
 
   const query = `INSERT INTO tasks (title, text, userID, boardID)
     VALUES ($1, $2, $3, $4) 
@@ -87,7 +88,7 @@ tasksController.createTask = (req,res,next) => {
 //DELETE ONE TASK CONTROLLER
 tasksController.deleteTask = (req,res,next) => {
   const { id } = req.query //set ID primary key in table
-  const text = `DELETE FROM task WHERE task.ID = ${id}`
+  const text = `DELETE FROM tasks WHERE _id = ${id}`
 
   db.query(text) 
     .then(data => {
@@ -108,7 +109,7 @@ tasksController.updateTask = (req,res,next) => {
   const { id } = req.query; //set ID primary key in table
   const { newUpdate, newTaskDetail, newDateCreated, newDoing, newDone } = req.body;
 
-  const text = `UPDATE task SET taskTitle = ${newUpdate}, taskDetail = ${newTaskDetail}, dateCreated = ${newDateCreated}, doing= ${newDoing}, done= ${newDone} WHERE task.id = ${id}`;
+  const text = `UPDATE task SET taskTitle = ${newUpdate}, taskDetail = ${newTaskDetail}, dateCreated = ${newDateCreated}, doing= ${newDoing}, done= ${newDone} WHERE _id = ${id}`;
 
   db.query(text)
     .then(data => {

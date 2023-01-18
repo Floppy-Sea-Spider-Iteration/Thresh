@@ -7,22 +7,40 @@ let today = new Date()
 
 const [ chatText, chatTextOnChange ] = useState('') //state for creating chat
 const [ createDate, createDateOnChange] = useState(today.toLocaleString()) //state for exisiting messages
-const [ firstName, setfirstName ] = useState()
+const [ fullName, setfullName ] = useState()
 const [ chatMessages, setChatMessages] = useState(''); // state for exisiting messages
+const [ allMessages, setallMessages ] = useState([])
+
+const [count, setCount ] = useState(0)
 
 useEffect(() => {
     console.log('useEffect running successfully');
 
-    fetch('/api/chat') //WE NEED TO UPDATE THE FETCH REQ URL
+    setTimeout(() => {
+       setCount(count => count + 1) 
+    }, 1000);
+
+    fetch('/api/chat')
     .then((response) => response.json())
     .then((data) => {
         console.log('GET all messages data', data)
-        //data = [ {}, {}, {}]
-        // setChatMessages(data)
-
-        // setfirstName(data.firstName)
-        // setChatMessages(data)
-        // createDateOnChange(data)
+        for (let i=0; i<data.length; i++) {
+            allMessages.push(
+                <div>
+                    {data[i].fullName} {data[i].chatText} {data[i].createDate}
+                </div>)
+        }
+        // if (data) { 
+        //     setallMessages((allMessages) => {
+        //         for (let i=0; i<data.length; i++) {
+        //             allMessages.push(
+        //                 <div>
+        //                 {data[i].fullName} {data[i].chatText} {data[i].createDate}
+        //                 </div>
+        //             )
+        //         }
+        //     })
+        // }
     })
 }, [])
 
@@ -30,16 +48,16 @@ useEffect(() => {
 //chatMessage = [ {user: Jack, chat: hi, time: 12:00pm},
 //                  {user: Jack, chat: bye time: 12:00pm}]
 
-const allMessages = [];
-if (chatMessages) { //[ {}, {}, {}]
-    for (let i=0; i<chatMessages.length; i++) {
-        allMessages.push(
-            <div>
-                {chatMessages[i].firstName} {chatMessages[i].chatText} {chatMessages[i].createDate}
-            </div>
-        )
-    }
-}
+// const allMessages = [];
+// if (messageData) { //[ {}, {}, {}]
+//     for (let i=0; i<messageData.length; i++) {
+//         allMessages.push(
+//             <div>
+//                 {messageData[i].fullName} {messageData[i].chatText} {messageData[i].createDate}
+//             </div>
+//         )
+//     }
+// }
 
 
 //addComment to POST meesages upon onclicks/onchanges when user sends a message
@@ -67,14 +85,14 @@ const addComment = async (e) => {
         <div className ='chatboxContainer p-10 absolute bottom-0 left-0 right-0' >
             <div className ='allMessagesContainer bg-white text-gray-700 p-3 rounded-xl overflow-scroll h-24'>
                  {allMessages} 
+                 {/* <p>This is an example message</p>
                  <p>This is an example message</p>
                  <p>This is an example message</p>
                  <p>This is an example message</p>
                  <p>This is an example message</p>
                  <p>This is an example message</p>
                  <p>This is an example message</p>
-                 <p>This is an example message</p>
-                 <p>This is an example message</p>
+                 <p>This is an example message</p> */}
             </div>
             <br />
             <div className='inputSend flex bg-white text-gray-600 rounded-xl'>

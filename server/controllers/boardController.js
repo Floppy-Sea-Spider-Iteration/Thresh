@@ -4,6 +4,7 @@ const boardController = {};
 
 boardController.createBoard = async (req, res, next) => {
   const { boardID } = req.body;
+  console.log("line 7, boardID", req.body)
   const checkBoardID = "SELECT boardID FROM boards WHERE boardID = $1;";
   const createBoardID = "INSERT INTO boards (boardID) VALUES ($1);";
   const values = [boardID];

@@ -30,7 +30,7 @@ const Column = ({ colName, droppableId, column, getTodos }) => {
       handleCloseModal();        //CLOSE NEW TODO MODAL
       getTodos();                //REFRESH                      
     } catch (err) {
-      console.log(err);
+      console.log('Error in column POST', err);
     }
   };
 

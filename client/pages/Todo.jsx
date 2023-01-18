@@ -5,13 +5,13 @@ import axios from 'axios';
 // const Todo = ({ deleteTodo, columns, setColumns, title, text, item, index, getTodos }) => {
 const Todo = ({ title, text, item, index, getTodos }) => {
   const deleteTodo = async (id) => {
-    console.log('deleted ', item.id);
+    console.log('deleted ', item._id);
     await axios.delete(`/api/tasks/delete?id=${id}`);
     getTodos();
   };
 
   return (
-    <Draggable key={item.id} draggableId={item.id.toString()} index={index}>
+    <Draggable key={item._id} draggableId={item._id.toString()} index={index}>
       {(provided, snapshot) => {
         return (
           <div
@@ -23,7 +23,7 @@ const Todo = ({ title, text, item, index, getTodos }) => {
             <div
               onClick={(e) => {
                 e.stopPropagation();
-                deleteTodo(item.id);
+                deleteTodo(item._id);
               }}
               className="bg-tertiary-500 px-2 rounded-lg text-primary-500 self-end -mr-4 -mt-1 cursor-pointer"
             >
