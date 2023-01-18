@@ -1,13 +1,13 @@
 const { Pool } = require('pg');
 
 // const BRIAN_URI = 'postgres://assojzyg:N8mhtCF41OW-ZC8BPpZAHq8w6MPsyHc-@mahmud.db.elephantsql.com/assojzyg';
-PG_URI= 'postgres://lvbqlfxf:cEJx4TZZyOxliTRx09oc_DjhHtXsJESr@isilo.db.elephantsql.com/lvbqlfxf'
+PG_URI= 'postgres://bigvuuki:ygMums4REErHbdnppA3sgJRSiWc1db7_@kashin.db.elephantsql.com/bigvuuki'
 PSW= 'cEJx4TZZyOxliTRx09oc_DjhHtXsJESr'
 // console.log('URI: ', process.env.PG_URI)
 
 const pool = new Pool({
     connectionString: PG_URI,
-    password: PSW,
+    // password: PSW,
     port: 3000
 });
 

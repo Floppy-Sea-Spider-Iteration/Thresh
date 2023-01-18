@@ -21,7 +21,7 @@ app.use('/dist', express.static(path.join(__dirname, '../dist')));
 // ROUTE HANDLER
 // Verify user does not work 
 // app.use('/dashboard', verifyRouter);
-app.get('/test', (req, res) => res.sendStatus(200))
+
 app.use('/users', userRouter);
 app.use('/tasks', taskRouter);
 app.use('/comments', commentRouter);
