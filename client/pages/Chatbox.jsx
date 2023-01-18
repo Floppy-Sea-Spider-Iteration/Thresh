@@ -7,27 +7,35 @@ let today = new Date()
 
 const [ chatText, chatTextOnChange ] = useState('') //state for creating chat
 const [ createDate, createDateOnChange] = useState(today.toLocaleString()) //state for exisiting messages
+const [ firstName, setfirstName ] = useState()
 const [ chatMessages, setChatMessages] = useState(''); // state for exisiting messages
 
 useEffect(() => {
     console.log('useEffect running successfully');
 
-    fetch('/') //WE NEED TO UPDATE THE FETCH REQ URL
+    fetch('/api/chat') //WE NEED TO UPDATE THE FETCH REQ URL
     .then((response) => response.json())
     .then((data) => {
         console.log('GET all messages data', data)
-        setChatMessages(data)
+        //data = [ {}, {}, {}]
+        // setChatMessages(data)
+
+        // setfirstName(data.firstName)
+        // setChatMessages(data)
+        // createDateOnChange(data)
     })
 }, [])
 
 
+//chatMessage = [ {user: Jack, chat: hi, time: 12:00pm},
+//                  {user: Jack, chat: bye time: 12:00pm}]
+
 const allMessages = [];
-if (chatMessages) {
+if (chatMessages) { //[ {}, {}, {}]
     for (let i=0; i<chatMessages.length; i++) {
         allMessages.push(
             <div>
-                <div>{chatMessages[i].chatText}</div> 
-                <div>{chatMessages[i].createDate}</div> 
+                {chatMessages[i].firstName} {chatMessages[i].chatText} {chatMessages[i].createDate}
             </div>
         )
     }
@@ -40,9 +48,8 @@ if (chatMessages) {
 
 const addComment = async (e) => {
     e.preventDefault()
-    
     const chat = {chatText}
-    const response = await fetch('/chatbox', {   //add path to connect backend
+    const response = await fetch('/api/chat', { 
         method: 'POST',
         body: JSON.stringify(chat),
         headers: {
@@ -51,16 +58,19 @@ const addComment = async (e) => {
     })
     const json = await response.json;
     if (response.ok) {
-        chatTextOnChange(''),
-        createDateOnChange(today.toLocaleString())
+        chatTextOnChange('')
     }
 }
 
     return (
         <form onSubmit={addComment}>
         <div className ='chatboxContainer p-10 absolute bottom-0 left-0 right-0' >
-            <div className ='allMessagesContainer bg-white text-gray-700 p-3 rounded-xl'>
+            <div className ='allMessagesContainer bg-white text-gray-700 p-3 rounded-xl overflow-scroll h-24'>
                  {allMessages} 
+                 <p>This is an example message</p>
+                 <p>This is an example message</p>
+                 <p>This is an example message</p>
+                 <p>This is an example message</p>
                  <p>This is an example message</p>
                  <p>This is an example message</p>
                  <p>This is an example message</p>
