@@ -94,29 +94,33 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="w-screen h-screen flex items-center justify-center">
-      <div className="grid grid-cols-4 w-5/6 h-3/4 gap-10 mt-10">
-        <DragDropContext
-          onDragEnd={(result) => onDragEnd(result, columns, setColumns)}
-        >
-          {Object.entries(columns).map(([columnId, column], index) => {
-            return (
-              <Column
-                colName={column.name}
-                droppableId={columnId}
-                key={columnId}
-                index={index}
-                column={column}
-                getTodos={getTodos}
-              />
-            );
-          })}
-        </DragDropContext>
+    <div>
+      <div className="w-screen h-3/4 pt-32 pb-12 flex items-center justify-center ">
+        <div className="grid grid-cols-4 min-h-4 w-5/6 gap-10 ">
+          <DragDropContext
+            onDragEnd={(result) => onDragEnd(result, columns, setColumns)}
+          >
+            {Object.entries(columns).map(([columnId, column], index) => {
+              return (
+                <Column
+                  colName={column.name}
+                  droppableId={columnId}
+                  key={columnId}
+                  index={index}
+                  column={column}
+                  getTodos={getTodos}
+                />
+              );
+            })}
+          </DragDropContext>
+        </div>
       </div>
-          <div className='items-flex-end'>
-        <Chatbox />
-          </div>
+      <div className=''>
+        <Chatbox/>
+      </div>
     </div>
+
+    
   );
 };
 
