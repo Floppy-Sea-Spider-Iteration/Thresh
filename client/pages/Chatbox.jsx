@@ -9,30 +9,29 @@ const [ chatText, chatTextOnChange ] = useState('') //state for creating chat
 const [ createDate, createDateOnChange] = useState(today.toLocaleString()) //state for exisiting messages
 const [ chatMessages, setChatMessages] = useState(''); // state for exisiting messages
 
-// useEffect(() => {
-//     console.log('useEffect running successfully');
+useEffect(() => {
+    console.log('useEffect running successfully');
 
-//     fetch('/') //WE NEED TO UPDATE THE FETCH REQ URL
-//     .then((response) => response.json())
-//     .then((data) => {
-//         console.log('GET all messages data', data)
-//         setChatMessages(data)
-//     })
-// }, [])
+    fetch('/') //WE NEED TO UPDATE THE FETCH REQ URL
+    .then((response) => response.json())
+    .then((data) => {
+        console.log('GET all messages data', data)
+        setChatMessages(data)
+    })
+}, [])
 
-// [ {Chattext, date} ]
 
-// const allMessages = [];
-// if (chatMessages) {
-//     for (let i=0; i<chatMessages.length; i++) {
-//         allMessages.push(
-//             <div>
-//                 <div>{chatMessages[i].chatText}</div> //update the column name
-//                 <div>{chatMessages[i].createDate}</div> //update the column name
-//             </div>
-//         )
-//     }
-// }
+const allMessages = [];
+if (chatMessages) {
+    for (let i=0; i<chatMessages.length; i++) {
+        allMessages.push(
+            <div>
+                <div>{chatMessages[i].chatText}</div> 
+                <div>{chatMessages[i].createDate}</div> 
+            </div>
+        )
+    }
+}
 
 
 //addComment to POST meesages upon onclicks/onchanges when user sends a message
@@ -59,15 +58,22 @@ const addComment = async (e) => {
 
     return (
         <form onSubmit={addComment}>
-        <div className ='chatboxContainer flex mx-auto bg-gray-200 rounded-xl shadow border p-8 m-10' >
-            <div className ='allMessagesContainer bg-white text-gray-700'>
-                {/* {allMessages} */}
-                All messages to display here
+        <div className ='chatboxContainer p-10 absolute bottom-0 left-0 right-0' >
+            <div className ='allMessagesContainer bg-white text-gray-700 p-3 rounded-xl'>
+                 {allMessages} 
+                 <p>This is an example message</p>
+                 <p>This is an example message</p>
+                 <p>This is an example message</p>
+                 <p>This is an example message</p>
             </div>
-            <input type='text' className='chatInput' 
-                onChange={(e) => chatTextOnChange(e.target.value)} value={chatText} placeholder='Type Message...'>
-            </input>
-            <button className='bg-white p-5 rounded-2x1' >Send</button>
+            <br />
+            <div className='inputSend flex bg-white text-gray-600 rounded-xl'>
+                <input type='text' className='chatInput w-4/5 h-8 rounded-xl flex flex-col justify-start items-center pl-3'
+                    onChange={(e) => chatTextOnChange(e.target.value)} value={chatText} placeholder='Type Message...'>
+                </input>
+                <button className='bg-blue w-1/5 flex flex-col items-center rounded-2x1 right-50'>Send</button>
+            </div>
+            
         </div>
         </form>
     )
