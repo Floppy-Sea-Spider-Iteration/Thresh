@@ -25,7 +25,8 @@ export const SignUp = () => {
     //   });/
     try {
       const response = await axios.post('/api/users/signup', { firstName, lastName, password, userRole, email })
-      console.log("This is the button response", response.data)
+      // console.log("This is the button response", response.data)
+      navigate('/login')
     } catch (err) {
       console.log("Error inside the POST signup button", err)
     }
