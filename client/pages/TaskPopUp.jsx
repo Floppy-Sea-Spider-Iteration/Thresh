@@ -13,7 +13,7 @@ useEffect(() => {
         setCount(count =>  count + 1)
     }, 1000);
 
-    fetch('/api/comment/get', {
+    fetch('/api/comments/get', {
         method: 'POST',
         headers: {
             'Content-Type' : 'application/json'
@@ -27,23 +27,22 @@ useEffect(() => {
     .then(data => {
         console.log('this is inside of TaskPopUp GET', data);
         const commentsData = [];
-        for (let i = 0; i < data.length; i++) {
+        for (let i = 0; i < data.rows.length; i++) {
             commentsData.push(
-                <div>
-                    <div key={data[i]._id}></div>
-                    <div>{data[i].commentBody}</div>
-                    <span onClick={deleteComment}>Delete Comment</span>
+                <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                    <div key={data.rows[i]._id}>{data.rows[i].text}</div>
+                    <span onClick={() => deleteComment(data.rows[i]._id)}>X</span>
                 </div>
             )
         }
         setAllComments(commentsData)
     }) 
-}, [])
+}, [count])
 
 const addComment = async (e) => {
     e.preventDefault();
     // const newComment = { commentBody }
-    const response = await fetch('/api/comment/add', {
+    const response = await fetch('/api/comments/add', {
         method: 'POST',
         body: JSON.stringify({
             'commentBody': commentBody,
@@ -55,17 +54,19 @@ const addComment = async (e) => {
     })
     const json = await response.json;
     if(response.ok) {
-        console.log('this is inside of adding a comment', data);
+        console.log('this is inside of adding a comment', json);
         setCommentBody('')
     }
 }
 
-const deleteComment = async (e) => {
-    e.preventDefault();
-    const deletedCommentID = {commentID}
-    const response = await fetch('/api/comments/add', {
+const deleteComment = async (commentID) => {
+    //e.preventDefault();
+    //const deletedCommentID = {commentID}
+    const response = await fetch('/api/comments/delete', {
         method: 'POST',
-        body: JSON.stringify(deletedCommentID),
+        body: JSON.stringify({
+            'commentID' : commentID
+        }),
         headers: {
             'Content-Type' : 'application/json'
         }
@@ -87,7 +88,7 @@ const deleteComment = async (e) => {
                 </div>
 
 
-                    <div className="allCommenntsContainer overflow-hidden h-50 w-1/2  text-gray-700 p-3 rounded-xl overflow-y-auto h-40">
+                    <div className="allCommenntsContainer overflow-hidden h-50 w-8/10  text-gray-700 p-3 rounded-xl overflow-y-auto h-40">
                         {allComments}
                         {/* Example comment<br/>
                         Example comment<br/>
