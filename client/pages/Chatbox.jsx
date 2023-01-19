@@ -8,7 +8,6 @@ let today = new Date()
 const [ chatText, chatTextOnChange ] = useState('') //state for creating chat
 // const [ createDate, createDateOnChange] = useState(today.toLocaleString()) //state for exisiting messages
 const [ allMessages, setAllMessages ] = useState('')
-
 const [count, setCount ] = useState(0)
 
 useEffect(() => {

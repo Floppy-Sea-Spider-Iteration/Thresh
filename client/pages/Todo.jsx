@@ -1,9 +1,18 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import axios from 'axios';
+import TaskPopUp from './TaskPopUp.jsx';
 
 // const Todo = ({ deleteTodo, columns, setColumns, title, text, item, index, getTodos }) => {
 const Todo = ({ title, text, item, index, getTodos }) => {
+
+  const [ buttonPopup, setButtonPopup ] = useState(false);
+  console.log(buttonPopup);
+
+  // const togglebuttonPopup =() => {
+  //   setbuttonPopup(!buttonPopup)
+  // }
+
   const deleteTodo = async (id) => {
     console.log('deleted ', item._id);
     await axios.delete(`/api/tasks/delete?id=${id}`);
@@ -11,16 +20,17 @@ const Todo = ({ title, text, item, index, getTodos }) => {
   };
 
 //info button
-  const infoTodo = async (id) => {
-    console.log('info card ', item._id);
-    await axios.get(`/api/tasks/get?id=${id}`);
-    getTodos();
-  };
+  // const infoTodo = async (id) => {
+  //   console.log('info card ', item._id);
+  //   await axios.get(`/api/tasks/get?id=${id}`);
+  //   getTodos();
+  // };
 
   return (
     <Draggable key={item._id} draggableId={item._id.toString()} index={index}>
       {(provided, snapshot) => {
         return (
+          
           <div
             {...provided.draggableProps}
             {...provided.dragHandleProps}
@@ -29,17 +39,23 @@ const Todo = ({ title, text, item, index, getTodos }) => {
           >
 
             <div class='flex justify-end'>
-              <div
+              {/* <button
                 onClick={(e) => {
                   e.stopPropagation();
-                  infoTodo(item._id);
+                  // infoTodo(item._id);
                 }}
                 className="bg-tertiary-500 w-5 px-2 rounded-lg text-primary-500 -mt-1 cursor-pointer"
               >
                 i
+              </button> */}
+              <div>
+                <button onclick={() => setButtonPopup(true)}>Open</button>
+
+                <TaskPopUp trigger={buttonPopup} setTrigger={setButtonPopup}></TaskPopUp>
+
               </div>
 
-              <div
+              <button
                 onClick={(e) => {
                   e.stopPropagation();
                   deleteTodo(item._id);
@@ -47,7 +63,7 @@ const Todo = ({ title, text, item, index, getTodos }) => {
                 className="bg-tertiary-500 w-5 px-2 rounded-lg text-primary-500 -mt-1 cursor-pointer"
               >
                 x
-              </div>
+              </button>
             </div>
 
 

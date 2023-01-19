@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 
-const TaskPopUp = ({title, text}) => {
+const TaskPopUp = (props) => {
 
 const [ allComments, setAllComments ] = useState('');
 const [ commentBody, setCommentBody ] = useState('');
@@ -11,15 +11,15 @@ useEffect(() => {
         setCount(count =>  count + 1)
     }, 1000);
 
-    fetch('/api/comments')//backend path here
+    fetch('/api/comments/get')//backend path here
     .then (response => response.json())
     .then(data => {
         const commentsData = [];
-        for (let i = 0; i < commentsData.length; i++) {
+        for (let i = 0; i < data.length; i++) {
             commentsData.push(
                 <div>
                     <div key={data[i]._id}></div>
-                    <div>{data[i].comments}</div>
+                    <div>{data[i].taskID}</div>
                 </div>
             )
         }
@@ -29,8 +29,8 @@ useEffect(() => {
 
 const addComment = async (e) => {
     e.preventDefault();
-    const newComment = {commentBody}
-    const response = await fetch('/api/comments', {
+    const newComment = {taskID, commentBody}
+    const response = await fetch('/api/comments/add', {
         method: 'POST',
         body: JSON.stringify(newComment),
         headers: {
@@ -42,15 +42,31 @@ const addComment = async (e) => {
     }
 }
 
+// const deleteComment = async (e) => {
+//     e.preventDefault();
+//     const deletedCommentID = {commentID}
+//     const response = await fetch('/api/comments/add', {
+//         method: 'POST',
+//         body: JSON.stringify(deletedCommentID),
+//         headers: {
+//             'Content-Type' : 'application/json'
+//         }
+//     })
+//     if(response.ok) {
+//         setCommentBody('')
+//     }
+// }
+
 
         
-    return (
+    return (props.trigger) ? (
         <div> 
-            <button>X</button>
-            <div> {title} </div>
-            <div> {text} </div>
+            <div class='absolute h-1/2 w-1/2 bg-blue-500'>
+            <button onClick={() => props.setTrigger(fals)}>X</button>
+            <div> {props.title} </div> {/*Pass down TaskPopUp through ToDo using props*/}
+            <div> {props.text} </div> {/*Pass down TaskPopUp through ToDo using props*/}
             
-            <div className="allCommenntsContainer bg-white text-gray-700 p-3 rounded-xl overflow-y-auto h-40">
+            <div className="allCommenntsContainer h-50 w-50 bg-white text-gray-700 p-3 rounded-xl overflow-y-auto h-40">
                 {allComments}
             </div>
             
@@ -62,7 +78,10 @@ const addComment = async (e) => {
                 </input>
                 <button className='bg-blue w-1/5 flex flex-col items-center rounded-2x1 right-50'>Post Comment</button>
             </form>
-
+            </div>
         </div>
-    )
+    ) : '';
 }
+
+
+export default TaskPopUp;
