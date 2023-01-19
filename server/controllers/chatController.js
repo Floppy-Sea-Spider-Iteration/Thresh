@@ -4,13 +4,13 @@ const chatController = {};
 
 chatController.createMessage = async (req, res, next) => {
   const { chatText } = req.body;
-  const { boardID, userID } = req.cookies;
+  const { boardID, ID } = req.cookies;
   try {
-    const nameVal = [userID];
+    const nameVal = [ID];
     const nameQuery = 'SELECT firstName, lastName FROM users WHERE _id = $1'
     const names = await db.query(nameQuery, nameVal);
     try {
-        const fullName = names.rows.firstName + " " + names.rows.lastName;
+        const fullName = names.rows[0].firstname + " " + names.rows[0].lastname;
         const values = [chatText, boardID, fullName];
 
         const query = 'INSERT INTO chats (chatText, boardID, fullName) values ($1, $2, $3)'

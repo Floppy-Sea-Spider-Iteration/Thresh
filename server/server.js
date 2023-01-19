@@ -28,6 +28,7 @@ app.use('/tasks', taskRouter);
 app.use('/comments', commentRouter);
 app.use('/board', boardRouter);
 app.use('/chat', chatRouter);
+
 // GLOBAL ERROR HANDLER
 app.use((err, req, res, next) => {
   const defaultErr = {
