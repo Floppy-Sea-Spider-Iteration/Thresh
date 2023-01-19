@@ -6,9 +6,7 @@ const Chatbox = () => {
 let today = new Date()
 
 const [ chatText, chatTextOnChange ] = useState('') //state for creating chat
-const [ createDate, createDateOnChange] = useState(today.toLocaleString()) //state for exisiting messages
-const [ fullName, setfullName ] = useState()
-const [ chatMessages, setChatMessages] = useState(''); // state for exisiting messages
+// const [ createDate, createDateOnChange] = useState(today.toLocaleString()) //state for exisiting messages
 const [ allMessages, setAllMessages ] = useState('')
 
 const [count, setCount ] = useState(0)
@@ -28,12 +26,13 @@ useEffect(() => {
         const messageData = [];
         for (let i=0; i<data.length; i++) {
             messageData.push(
-                <div className='flex ' key={data[i]._id}>
+                <div class='flex relative' key={data[i]._id}>
                     <div>
-                        {data[i].fullname}: { data[i].chattext }
+                        {data[i].fullname}: {data[i].chattext}
                     </div>
-                    <div className='flex justify-end flex-row'>
-                        {data[i].createdate}
+                    <div class='absolute right-24 text-gray-400 pl-1" style="font-size: 2px pl-2.5'>
+                        {/* {data[i].createdate} */}
+                        {today.toLocaleString()}
                     </div>
                 </div>)
                 }
