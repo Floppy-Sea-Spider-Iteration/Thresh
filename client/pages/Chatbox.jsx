@@ -6,11 +6,8 @@ const Chatbox = () => {
 let today = new Date()
 
 const [ chatText, chatTextOnChange ] = useState('') //state for creating chat
-const [ createDate, createDateOnChange] = useState(today.toLocaleString()) //state for exisiting messages
-const [ fullName, setfullName ] = useState()
-const [ chatMessages, setChatMessages] = useState(''); // state for exisiting messages
-const [ allMessages, setallMessages ] = useState([])
-
+// const [ createDate, createDateOnChange] = useState(today.toLocaleString()) //state for exisiting messages
+const [ allMessages, setAllMessages ] = useState('')
 const [count, setCount ] = useState(0)
 
 useEffect(() => {
@@ -23,46 +20,28 @@ useEffect(() => {
     fetch('/api/chat')
     .then((response) => response.json())
     .then((data) => {
-        console.log('GET all messages data', data)
+        console.log('GET all messages data', data) //data ---> [{}, {], {}}]
+
+        const messageData = [];
         for (let i=0; i<data.length; i++) {
-            allMessages.push(
-                <div>
-                    {data[i].fullName} {data[i].chatText} {data[i].createDate}
+            messageData.push(
+                <div class='flex relative' key={data[i]._id}>
+                    <div>
+                        {data[i].fullname}: {data[i].chattext}
+                    </div>
+                    <div class='absolute right-24 text-gray-400 pl-1" style="font-size: 2px pl-2.5'>
+                        {/* {data[i].createdate} */}
+                        {today.toLocaleString()}
+                    </div>
                 </div>)
-        }
-        // if (data) { 
-        //     setallMessages((allMessages) => {
-        //         for (let i=0; i<data.length; i++) {
-        //             allMessages.push(
-        //                 <div>
-        //                 {data[i].fullName} {data[i].chatText} {data[i].createDate}
-        //                 </div>
-        //             )
-        //         }
-        //     })
-        // }
+                }
+        setAllMessages(messageData);
     })
 }, [])
 
 
-//chatMessage = [ {user: Jack, chat: hi, time: 12:00pm},
-//                  {user: Jack, chat: bye time: 12:00pm}]
-
-// const allMessages = [];
-// if (messageData) { //[ {}, {}, {}]
-//     for (let i=0; i<messageData.length; i++) {
-//         allMessages.push(
-//             <div>
-//                 {messageData[i].fullName} {messageData[i].chatText} {messageData[i].createDate}
-//             </div>
-//         )
-//     }
-// }
-
 
 //addComment to POST meesages upon onclicks/onchanges when user sends a message
-
-
 
 const addComment = async (e) => {
     e.preventDefault()
@@ -83,7 +62,7 @@ const addComment = async (e) => {
     return (
         <form onSubmit={addComment}>
         <div className ='chatboxContainer p-10 absolute bottom-0 left-0 right-0' >
-            <div className ='allMessagesContainer bg-white text-gray-700 p-3 rounded-xl overflow-scroll h-24'>
+            <div className ='allMessagesContainer bg-white text-gray-700 p-3 rounded-xl overflow-y-auto h-24'>
                  {allMessages} 
                  {/* <p>This is an example message</p>
                  <p>This is an example message</p>
