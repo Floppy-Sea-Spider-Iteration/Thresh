@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Picker from 'emoji-picker-react';
 
 const Chatbox = () => {
   
@@ -7,8 +8,15 @@ let today = new Date()
 
 const [ chatText, chatTextOnChange ] = useState('') //state for creating chat
 // const [ createDate, createDateOnChange] = useState(today.toLocaleString()) //state for exisiting messages
-const [ allMessages, setAllMessages ] = useState('')
-const [count, setCount ] = useState(0)
+const [ allMessages, setAllMessages ] = useState('');
+const [count, setCount ] = useState(0);
+const [showPicker, setShowPicker] = useState(false);
+
+const onEmojiClick = (emojiObject, event) => {
+    console.log('emojoiObject',emojiObject);
+    chatTextOnChange(curr => curr + emojiObject.emoji);
+    setShowPicker(false);
+}
 
 useEffect(() => {
     console.log('useEffect running successfully');
@@ -37,7 +45,7 @@ useEffect(() => {
                 }
         setAllMessages(messageData);
     })
-}, [])
+}, [count])
 
 
 
@@ -78,7 +86,14 @@ const addComment = async (e) => {
                 <input type='text' className='chatInput w-4/5 h-8 rounded-xl flex flex-col justify-start items-center pl-3'
                     onChange={(e) => chatTextOnChange(e.target.value)} value={chatText} placeholder='Type Message...'>
                 </input>
+                <img className='emoji-icon'
+                    src='https://icons.getbootstrap.com/assets/icons/emoji-smile.svg'
+                    onClick={() => setShowPicker(val => !val)} 
+                    style={{padding: '0px 10px 0px 10px'}}/>
                 <button className='bg-blue w-1/5 flex flex-col items-center rounded-2x1 right-50'>Send</button>
+            </div>
+            <div style={{position: 'absolute', right: '10%', bottom: '32%'}}>
+                {showPicker && <Picker pickerStyle={{width: '5%'}} onEmojiClick={onEmojiClick} />}
             </div>
             
         </div>
