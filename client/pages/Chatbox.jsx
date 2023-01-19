@@ -14,7 +14,7 @@ const [showPicker, setShowPicker] = useState(false);
 
 const onEmojiClick = (emojiObject, event) => {
     console.log('emojoiObject',emojiObject);
-    chatTextOnChange(curr => curr + emojiObject.emoji);
+    chatTextOnChange(inputFieldText => inputFieldText + emojiObject.emoji);
     setShowPicker(false);
 }
 
@@ -38,8 +38,8 @@ useEffect(() => {
                         {data[i].fullname}: {data[i].chattext}
                     </div>
                     <div className='absolute right-24 text-gray-400 pl-1" style="font-size: 2px pl-2.5'>
-                        {/* {data[i].createdate} */}
-                        {today.toLocaleString()}
+                        {data[i].createdate.slice(0, 10)}
+                        {/* {today.toLocaleString()} */}
                     </div>
                 </div>)
                 }
@@ -92,6 +92,7 @@ const addComment = async (e) => {
                     style={{padding: '0px 10px 0px 10px'}}/>
                 <button className='bg-blue w-1/5 flex flex-col items-center rounded-2x1 right-50'>Send</button>
             </div>
+            
             <div style={{position: 'absolute', right: '10%', bottom: '32%'}}>
                 {showPicker && <Picker pickerStyle={{width: '5%'}} onEmojiClick={onEmojiClick} />}
             </div>

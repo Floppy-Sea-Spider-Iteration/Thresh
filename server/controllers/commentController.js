@@ -4,10 +4,11 @@ const commentController = {};
 
 commentController.addComment = async (req, res, next) => {
     const { taskID, commentBody } = req.body;
-    const { ID } = req.cookies;
-
-    const query = 'INSERT INTO comments (commentBody, userID, taskID) VALUES ($1, $2, $3);';
-    const values = [commentBody, ID, taskID];
+    const { ID, boardID } = req.cookies;
+    console.log('taskID: ', taskID, 'commentBody: ', commentBody);
+    console.log(ID);
+    const query = 'INSERT INTO comments (text, userID, taskID, boardID) VALUES ($1, $2, $3, $4);';
+    const values = [commentBody, ID, taskID, boardID];
 
     try {
         await db.query(query, values);
