@@ -25,11 +25,11 @@ useEffect(() => {
         const messageData = [];
         for (let i=0; i<data.length; i++) {
             messageData.push(
-                <div class='flex relative' key={data[i]._id}>
+                <div className='flex relative' key={data[i]._id}>
                     <div>
                         {data[i].fullname}: {data[i].chattext}
                     </div>
-                    <div class='absolute right-24 text-gray-400 pl-1" style="font-size: 2px pl-2.5'>
+                    <div className='absolute right-24 text-gray-400 pl-1" style="font-size: 2px pl-2.5'>
                         {/* {data[i].createdate} */}
                         {today.toLocaleString()}
                     </div>
