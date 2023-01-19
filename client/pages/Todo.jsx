@@ -49,7 +49,7 @@ const Todo = ({ title, text, item, index, getTodos }) => {
                 i
               </button> */}
               <div>
-                <button onclick={() => setButtonPopup(true)}>Open</button>
+                <button onClick={() => setButtonPopup(true)}>Open</button>
 
                 <TaskPopUp trigger={buttonPopup} setTrigger={setButtonPopup}></TaskPopUp>
 

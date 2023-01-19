@@ -62,7 +62,7 @@ const addComment = async (e) => {
     return (props.trigger) ? (
         <div> 
             <div class='absolute h-1/2 w-1/2 bg-blue-500'>
-            <button onClick={() => props.setTrigger(fals)}>X</button>
+            <button onClick={() => props.setTrigger(false)}>X</button>
             <div> {props.title} </div> {/*Pass down TaskPopUp through ToDo using props*/}
             <div> {props.text} </div> {/*Pass down TaskPopUp through ToDo using props*/}
             
