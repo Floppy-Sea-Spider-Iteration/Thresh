@@ -7,11 +7,6 @@ import TaskPopUp from './TaskPopUp.jsx';
 const Todo = ({ title, text, item, index, getTodos }) => {
 
   const [ buttonPopup, setButtonPopup ] = useState(false);
-  console.log(buttonPopup);
-
-  // const togglebuttonPopup =() => {
-  //   setbuttonPopup(!buttonPopup)
-  // }
 
   const deleteTodo = async (id) => {
     console.log('deleted ', item._id);
@@ -19,12 +14,14 @@ const Todo = ({ title, text, item, index, getTodos }) => {
     getTodos();
   };
 
-//info button
-  // const infoTodo = async (id) => {
-  //   console.log('info card ', item._id);
-  //   await axios.get(`/api/tasks/get?id=${id}`);
-  //   getTodos();
-  // };
+// info button - sending a GET req for specific id gives the entire row
+  const infoTodo = async (id) => {
+    console.log('info card ', item._id);
+    await axios.get(`/api/tasks/get?id=${id}`);
+    getTodos();
+  };
+
+
 
   return (
     <Draggable key={item._id} draggableId={item._id.toString()} index={index}>
@@ -38,20 +35,14 @@ const Todo = ({ title, text, item, index, getTodos }) => {
             className="bg-primary-500 rounded-xl min-h-[100px] mt-3 text-secondary-500 px-6 py-3 flex flex-col"
           >
 
-            <div class='flex justify-end'>
-              {/* <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  // infoTodo(item._id);
-                }}
-                className="bg-tertiary-500 w-5 px-2 rounded-lg text-primary-500 -mt-1 cursor-pointer"
-              >
-                i
-              </button> */}
-              <div>
-                <button onClick={() => setButtonPopup(true)}>Open</button>
+            <div className='flex justify-end'>
 
-                <TaskPopUp trigger={buttonPopup} setTrigger={setButtonPopup}></TaskPopUp>
+              <div>
+                <button 
+                className="flex justify-center bg-tertiary-500 w-6 px-2 rounded-lg text-primary-500 -mt-1 cursor-pointer"
+                onClick={() => setButtonPopup(true)}>i</button>
+
+                <TaskPopUp trigger={buttonPopup} setTrigger={setButtonPopup} title={title} text={text} _id={item._id}></TaskPopUp>
 
               </div>
 
@@ -60,7 +51,7 @@ const Todo = ({ title, text, item, index, getTodos }) => {
                   e.stopPropagation();
                   deleteTodo(item._id);
                 }}
-                className="bg-tertiary-500 w-5 px-2 rounded-lg text-primary-500 -mt-1 cursor-pointer"
+                className="flex justify-center ml-1 bg-tertiary-500 w-6 px-2 rounded-lg text-primary-500 -mt-1 cursor-pointer"
               >
                 x
               </button>
