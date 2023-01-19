@@ -33,7 +33,7 @@ const Navbar = () => {
             >
               Home
             </Link>
-            <Link
+            {/* <Link
               to="/dashboard"
               onClick={() => setSelectedPage('dashboard')}
               className={`${
@@ -43,7 +43,7 @@ const Navbar = () => {
               } hover:text-opacity-75`}
             >
               Dashboard
-            </Link>
+            </Link> */}
           </div>
           <div className="flex items-center gap-10">
             <Link to="/login">

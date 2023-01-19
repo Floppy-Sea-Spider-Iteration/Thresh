@@ -42,6 +42,7 @@ const onDragEnd = (result, columns, setColumns) => {
 };
 
 const Dashboard = () => {
+  const [ count, setCount ] = useState(0);
   // change data to empty array when working with real data
   const [columns, setColumns] = useState({
     ['tasks']: {
@@ -63,8 +64,11 @@ const Dashboard = () => {
   });
 
   useEffect(() => {
+    setTimeout(()=> {
+      setCount(count =>  count + 1)
+  }, 1000);
     getTodos();
-  }, []);
+  }, [count]);
 
   const getTodos = async () => {
     try {
