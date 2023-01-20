@@ -6,8 +6,10 @@ const tasksController = {};
 
 //GET ALL TASKS CONTROLLER
 tasksController.getTasks = (req, res, next) => {
-  const text = 'SELECT * FROM task';
-    db.query(text)
+  const { boardID } = req.cookies;
+  const text = 'SELECT * FROM tasks WHERE boardID = $1';
+  const values = [boardID];
+    db.query(text, values)
     .then(data => {
        // console.log('DATA: ', data);
         //console.log('DATA.ROWS: ', data.rows);
@@ -21,12 +23,12 @@ tasksController.getTasks = (req, res, next) => {
         message: {err: 'Error in taskController.getTasks'}
       })
     })
+};
 
-}
 //GET ONE TASK CONTROLLER
 tasksController.getTask = (req, res, next) => {
   const id = req.params.id //set ID primary key in table
-    const text = `SELECT * FROM task WHERE id = ${id}`; 
+    const text = `SELECT * FROM task WHERE _id = ${id}`; 
     db.query(text)
     .then(data => {
         console.log('DATA ', data.rows)
@@ -40,11 +42,12 @@ tasksController.getTask = (req, res, next) => {
         message: {err: 'Error in taskController.getTask'}
       })
     })
+};
 
-}
 //CREATE ONE TASK CONTROLLER
 tasksController.createTask = (req,res,next) => {
-  
+  const { ID, boardID } = req.cookies;
+
   const {
     title,
     text,
@@ -52,15 +55,18 @@ tasksController.createTask = (req,res,next) => {
     // comment_id
   } = req.body
   
-  // console.log(req.body);
+  console.log(req.body);
+  console.log(ID, boardID);
 
-  const query = `INSERT INTO task (title, text)
-    VALUES($1, $2)
+  const query = `INSERT INTO tasks (title, text, userID, boardID)
+    VALUES ($1, $2, $3, $4) 
     RETURNING *`;
 
   const values = [
     title,
-    text
+    text,
+    ID,
+    boardID
     // create_date
   ]
 
@@ -82,7 +88,7 @@ tasksController.createTask = (req,res,next) => {
 //DELETE ONE TASK CONTROLLER
 tasksController.deleteTask = (req,res,next) => {
   const { id } = req.query //set ID primary key in table
-  const text = `DELETE FROM task WHERE task.ID = ${id}`
+  const text = `DELETE FROM tasks WHERE _id = ${id}`
 
   db.query(text) 
     .then(data => {
@@ -98,12 +104,29 @@ tasksController.deleteTask = (req,res,next) => {
     })
 }
 
+tasksController.updateColumn = async (req, res, next) => {
+  try {
+    const { taskID, currentColumn} = req.body;
+    const query = 'UPDATE tasks SET currentColumn = $1 WHERE _id =$2';
+    const values = [currentColumn, taskID];
+    await db.query(query, values)
+    return next()
+  }
+  catch (err) {
+    return next({
+      log: 'tasksController.updateColumn: unable to update tasks currentColumn',
+      message: {err: 'tasksController.updateColumn ' + err}
+    })
+  }
+};
+
+
 //UPDATE ONE TASK CONTROLLER ---> not working yet
 tasksController.updateTask = (req,res,next) => {
   const { id } = req.query; //set ID primary key in table
   const { newUpdate, newTaskDetail, newDateCreated, newDoing, newDone } = req.body;
 
-  const text = `UPDATE task SET taskTitle = ${newUpdate}, taskDetail = ${newTaskDetail}, dateCreated = ${newDateCreated}, doing= ${newDoing}, done= ${newDone} WHERE task.id = ${id}`;
+  const text = `UPDATE task SET taskTitle = ${newUpdate}, taskDetail = ${newTaskDetail}, dateCreated = ${newDateCreated}, doing= ${newDoing}, done= ${newDone} WHERE _id = ${id}`;
 
   db.query(text)
     .then(data => {

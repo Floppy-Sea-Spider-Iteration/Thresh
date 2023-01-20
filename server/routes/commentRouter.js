@@ -1,31 +1,28 @@
-const express = require('express');
-const commentsController = require('../controllers/commentsController');
+const express = require("express");
+const commentController = require("../controllers/commentController");
 
 const router = express.Router();
 
-//get all comments
-router.get('/all', commentsController.getComments, (req, res)  => {
-    res.status(200).json(res.locals.allComments);
-})
-//get all comments for individual task
-router.get('/:id', commentsController.getCommentsPerTask, (req, res)  => {
-    res.status(200).json(res.locals.specificComment);
-})
-//post a comment
-router.post('/', commentsController.addComment, (req, res)  => {
-    res.status(200).json(res.locals.newComment);
-})
-//delete all comments (may not need)
-// router.delete('/:id', commentsController.deleteComments, (req, res)  => {
-//     res.status(200).json(res.locals.deletedComments);
-// })
-//remove comment from task
-router.delete('/:id', commentsController.deleteComments, (req, res)  => {
-    res.status(200).json(res.locals.deletedComments);
-})
-//update specific comment
-router.patch('/:id', commentsController.updateComment, (req, res)  => {
-    res.status(201).json(res.locals.updatedComment);
-})
-module.exports = router;
+router.post("/add", 
+    commentController.addComment,
+    (req, res) => {
+        res.sendStatus(200)
+    }
+);
 
+router.post("/get", 
+    commentController.getComments,
+    (req, res) => {
+        res.status(200).json(res.locals.comments)
+    }
+);
+
+//deleting comment
+router.post('/delete',
+    commentController.deleteComment,
+    (req, res) => {
+        res.sendStatus(200)
+    }
+);
+
+module.exports = router;

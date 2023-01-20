@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Home from './Home.jsx';
 import { Login }  from './Login.jsx';
 import { SignUp } from './SignUp.jsx';
+import { EnterBoard } from './EnterBoard.jsx';
 import Dashboard from './Dashboard.jsx';
 import { Link, Route, Routes, useNavigate } from 'react-router-dom';
 import Logo from '../Images/Logo.png';
@@ -32,7 +33,7 @@ const Navbar = () => {
             >
               Home
             </Link>
-            <Link
+            {/* <Link
               to="/dashboard"
               onClick={() => setSelectedPage('dashboard')}
               className={`${
@@ -42,7 +43,7 @@ const Navbar = () => {
               } hover:text-opacity-75`}
             >
               Dashboard
-            </Link>
+            </Link> */}
           </div>
           <div className="flex items-center gap-10">
             <Link to="/login">
@@ -58,9 +59,10 @@ const Navbar = () => {
       </nav>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/dashboard" element={<Dashboard />} />  
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/enterboard" element={<EnterBoard/>} />
       </Routes>
     </>
   );

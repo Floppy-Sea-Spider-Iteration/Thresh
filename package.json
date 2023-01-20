@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon ./server/server.js",
-    "dev": "webpack-dev-server --open --hot",
+    "dev": "webpack-dev-server --open & nodemon server/server.js",
     "build": "webpack"
   },
   "repository": {
@@ -23,10 +23,11 @@
     "@heroicons/react": "^2.0.13",
     "axios": "^1.2.2",
     "bcrypt": "^5.1.0",
+    "cookie-parser": "^1.4.6",
     "dotenv": "^16.0.1",
+    "emoji-picker-react": "^4.4.7",
     "express": "^4.18.2",
     "jsonwebtoken": "^8.5.1",
-    "cookie-parser": "^1.4.6",
     "pg": "^8.8.0",
     "postgres": "^3.3.3",
     "psql": "^0.0.1",
