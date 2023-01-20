@@ -45,7 +45,7 @@ useEffect(() => {
                 }
         setAllMessages(messageData);
     })
-}, [count])
+}, [])
 
 
 

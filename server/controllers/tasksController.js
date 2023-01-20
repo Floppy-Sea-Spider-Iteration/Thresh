@@ -104,6 +104,23 @@ tasksController.deleteTask = (req,res,next) => {
     })
 }
 
+tasksController.updateColumn = async (req, res, next) => {
+  try {
+    const { taskID, currentColumn} = req.body;
+    const query = 'UPDATE tasks SET currentColumn = $1 WHERE _id =$2';
+    const values = [currentColumn, taskID];
+    await db.query(query, values)
+    return next()
+  }
+  catch (err) {
+    return next({
+      log: 'tasksController.updateColumn: unable to update tasks currentColumn',
+      message: {err: 'tasksController.updateColumn ' + err}
+    })
+  }
+};
+
+
 //UPDATE ONE TASK CONTROLLER ---> not working yet
 tasksController.updateTask = (req,res,next) => {
   const { id } = req.query; //set ID primary key in table
