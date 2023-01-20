@@ -24,20 +24,20 @@ const Modal = ({
       >
         x
       </div>
-      <label className="text-primary-500">
+      <label className="text-secondary-500 ">
         Task
         <input
           value={newTodo.title}
           onChange={handleTodoTitle}
-          className="bg-primary-500 ml-3 rounded-lg px-3 text-secondary-500"
+          className="bg-slate-50 ml-3 rounded-lg px-3 text-secondary-500"
         />
       </label>
-      <label className="text-primary-500">
+      <label className="text-secondary-500">
         Task Details
         <input
           value={newTodo.text}
           onChange={handleTodoText}
-          className="text-secondary-500 bg-primary-500 ml-3 mr-16 rounded-lg px-3 py-1"
+          className="text-secondary-500 bg-slate-50 ml-3 mr-16 rounded-lg px-3 py-1"
         />
       </label>
 

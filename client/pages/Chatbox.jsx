@@ -32,7 +32,7 @@ useEffect(() => {
 
         const messageData = [];
         for (let i=0; i<data.length; i++) {
-            messageData.push(
+            messageData.unshift(
                 <div className='flex relative' key={data[i]._id}>
                     <div>
                         {data[i].fullname}: {data[i].chattext}
@@ -45,7 +45,7 @@ useEffect(() => {
                 }
         setAllMessages(messageData);
     })
-}, [])
+}, [count])
 
 
 
@@ -69,29 +69,23 @@ const addComment = async (e) => {
 
     return (
         <form onSubmit={addComment}>
-        <div className ='chatboxContainer p-10 absolute bottom-0 left-0 right-0' >
-            <div className ='allMessagesContainer bg-white text-gray-700 p-3 rounded-xl overflow-y-auto h-24'>
+        <div className ='chatboxContainer pl-10 pr-10 pb-4 absolute bottom-0 left-0 right-0' >
+            <div className ='allMessagesContainer flex flex-col-reverse text-sm bg-white text-gray-700 p-3 rounded-xl overflow-y-auto h-24'>
                  {allMessages} 
-                 {/* <p>This is an example message</p>
-                 <p>This is an example message</p>
-                 <p>This is an example message</p>
-                 <p>This is an example message</p>
-                 <p>This is an example message</p>
-                 <p>This is an example message</p>
-                 <p>This is an example message</p>
-                 <p>This is an example message</p> */}
             </div>
-            <br />
-            <div className='inputSend flex bg-white text-gray-600 rounded-xl'>
-                <input type='text' className='chatInput w-4/5 h-8 rounded-xl flex flex-col justify-start items-center pl-3'
-                    onChange={(e) => chatTextOnChange(e.target.value)} value={chatText} placeholder='Type Message...'>
-                </input>
-                <img className='emoji-icon'
-                    src='https://icons.getbootstrap.com/assets/icons/emoji-smile.svg'
-                    onClick={() => setShowPicker(val => !val)} 
-                    style={{padding: '0px 10px 0px 10px'}}/>
-                <button className='bg-blue w-1/5 flex flex-col items-center rounded-2x1 right-50'>Send</button>
+            <div className='pt-2'>
+                <div className='inputSend flex bg-white text-gray-600 rounded-xl'>
+                    <input type='text' className='chatInput w-5/6 h-8 text-sm rounded-xl flex flex-col justify-start items-center pl-3'
+                        onChange={(e) => chatTextOnChange(e.target.value)} value={chatText} placeholder='Type Message...'>
+                    </input>
+                    <img className='emoji-icon'
+                        src='https://icons.getbootstrap.com/assets/icons/emoji-smile.svg'
+                        onClick={() => setShowPicker(val => !val)} 
+                        style={{padding: '0px 10px 0px 10px'}}/>
+                    <button className='bg-blue w-1/6 flex flex-col items-center rounded-2x1 right-50 text-sm'>Send</button>
+                </div>
             </div>
+            
             
             <div style={{position: 'absolute', right: '10%', bottom: '32%'}}>
                 {showPicker && <Picker pickerStyle={{width: '5%'}} onEmojiClick={onEmojiClick} />}
