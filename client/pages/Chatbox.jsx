@@ -32,7 +32,7 @@ useEffect(() => {
 
         const messageData = [];
         for (let i=0; i<data.length; i++) {
-            messageData.push(
+            messageData.unshift(
                 <div className='flex relative' key={data[i]._id}>
                     <div>
                         {data[i].fullname}: {data[i].chattext}
@@ -45,7 +45,7 @@ useEffect(() => {
                 }
         setAllMessages(messageData);
     })
-}, [])
+}, [count])
 
 
 
@@ -70,7 +70,7 @@ const addComment = async (e) => {
     return (
         <form onSubmit={addComment}>
         <div className ='chatboxContainer pl-10 pr-10 pb-4 absolute bottom-0 left-0 right-0' >
-            <div className ='allMessagesContainer text-sm bg-white text-gray-700 p-3 rounded-xl overflow-y-auto h-24'>
+            <div className ='allMessagesContainer flex flex-col-reverse text-sm bg-white text-gray-700 p-3 rounded-xl overflow-y-auto h-24'>
                  {allMessages} 
             </div>
             <div className='pt-2'>

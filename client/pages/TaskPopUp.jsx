@@ -13,31 +13,33 @@ useEffect(() => {
         setCount(count =>  count + 1)
     }, 1000);
 
-    fetch('/api/comments/get', {
-        method: 'POST',
-        headers: {
-            'Content-Type' : 'application/json'
-        },
-        body: JSON.stringify({
-            'taskID': props._id
+    if (props.trigger){
+        fetch('/api/comments/get', {
+            method: 'POST',
+            headers: {
+                'Content-Type' : 'application/json'
+            },
+            body: JSON.stringify({
+                'taskID': props._id
+            })
         })
-    })
-    
-    .then (response => response.json())
-    .then(data => {
-        console.log('this is inside of TaskPopUp GET', data);
-        const commentsData = [];
-        for (let i = 0; i < data.rows.length; i++) {
-            commentsData.push(
-                <div style={{display: 'flex', justifyContent: 'space-between'}}>
-                    <div key={data.rows[i]._id}>{data.rows[i].text}</div>
-                    <span className='pr-10 text-sm text-red-300 hover:text-red-800' onClick={() => deleteComment(data.rows[i]._id)}>Delete</span>
-                </div>
-            )
-        }
-        setAllComments(commentsData)
-    }) 
-}, [])
+        
+        .then (response => response.json())
+        .then(data => {
+            console.log('this is inside of TaskPopUp GET', data);
+            const commentsData = [];
+            for (let i = 0; i < data.rows.length; i++) {
+                commentsData.push(
+                    <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                        <div key={data.rows[i]._id}>{data.rows[i].text}</div>
+                        <span className ='pr-10 text-red-500 hover:text-red-800 pr-4'onClick={() => deleteComment(data.rows[i]._id)}>Delete</span>
+                    </div>
+                )
+            }
+            setAllComments(commentsData)
+        }) 
+    }
+}, [count])
 
 const addComment = async (e) => {
     e.preventDefault();

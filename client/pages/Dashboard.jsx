@@ -5,6 +5,7 @@ import Column from './Column.jsx';
 import Chatbox from './Chatbox.jsx'
 
 const onDragEnd = (result, columns, setColumns) => {
+  console.log("here", result)
   if (!result.destination) return;
   const { source, destination } = result;
 
@@ -74,10 +75,10 @@ const Dashboard = () => {
     try {
       const response = await axios.get('/api/tasks');
       // console.log('RES DATAAA: ', response.data)
-      setColumns({
+      const newColumns = {
         ['tasks']: {
           name: 'To Do',
-          items: response.data,
+          items: [],
         },
         ['inProgress']: {
           name: 'In Progress',
@@ -91,7 +92,13 @@ const Dashboard = () => {
           name: 'Complete',
           items: [],
         },
-      });
+      };
+      for (let i = 0; i < response.data.length; i++) {
+        const currTask = response.data[i];
+        if (!currTask.currentcolumn) newColumns[['tasks']].items.push(currTask);
+        else newColumns[[currTask.currentcolumn]].items.push(currTask);
+      }
+      setColumns(newColumns);
     } catch (err) {
       console.log(err);
     }
@@ -103,7 +110,21 @@ const Dashboard = () => {
         <div className="grid grid-cols-4 min-h-4 w-5/6 gap-10 ">
           
           <DragDropContext
-            onDragEnd={(result) => onDragEnd(result, columns, setColumns)}
+            onDragEnd={(result) => { 
+              onDragEnd(result, columns, setColumns);
+              fetch('/api/tasks/updateColumn', {
+                method: 'POST', 
+                body: JSON.stringify({
+                  'taskID': result.draggableId,
+                  'currentColumn': result.destination.droppableId 
+                }), 
+                headers: {
+                  'Content-Type': 'application/json' 
+                }
+              })
+              //send post request to backend to update database w/ result.destination.droppableID and taskID
+              }
+            }
           >
             {Object.entries(columns).map(([columnId, column], index) => {
               return (
