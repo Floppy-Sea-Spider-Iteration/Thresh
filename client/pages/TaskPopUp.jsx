@@ -31,13 +31,13 @@ useEffect(() => {
             commentsData.push(
                 <div style={{display: 'flex', justifyContent: 'space-between'}}>
                     <div key={data.rows[i]._id}>{data.rows[i].text}</div>
-                    <span onClick={() => deleteComment(data.rows[i]._id)}>X</span>
+                    <span className='pr-10 text-sm text-red-300 hover:text-red-800' onClick={() => deleteComment(data.rows[i]._id)}>Delete</span>
                 </div>
             )
         }
         setAllComments(commentsData)
     }) 
-}, [count])
+}, [])
 
 const addComment = async (e) => {
     e.preventDefault();
@@ -77,36 +77,41 @@ const deleteComment = async (commentID) => {
         
     return (props.trigger) ? (
         <div> 
-            <div className='fixed top-1/4 inset-x-0 mx-auto h-1/2 w-4/6 bg-blue-500 bg-opacity-95 rounded-xl'>
-                <div className='flex justify-end pr-3 pt-3'>    
+            <div className='fixed top-1/4 inset-x-0 mx-auto h-1/2 w-1/2 bg-blue-500 bg-opacity-95 rounded-xl'>
+                <div className='flex justify-end pr-3 pt-3 text-xs'>    
                     <button  onClick={() => props.setTrigger(false)}>X</button>
                 </div>
-                <div className="flex justify-center text-xl items-center flex-col ">
-                    <div className="text-white text-3xl pt-1.5 pb-7 w-5/6 text-center rounded-l"> {props.title} </div> {/*Pass down TaskPopUp through ToDo using props*/}
-                    
-                    <div className="text-white text-lg p-1 pb-7 w-5/6 text-center rounded-l overflow-y-auto"> {props.text} </div> {/*Pass down TaskPopUp through ToDo using props*/}
+
+                <div className="flex text-xl justify-center ">
+                    <div className="text-white text-2xl pt-1 pb-2 w-5/6 text-center rounded-l font-bold"> {props.title} </div> {/*Pass down TaskPopUp through ToDo using props*/}
                 </div>
 
+                <div>
+                    <div className="flex text-lg text-gray-700 pl-3 pb-1 ">
+                        Details:  
+                    </div>
+  
+                    <div className="text-slate-50 text-md pl-8 pb-7 w-5/6 rounded-l overflow-y-auto"> {props.text} </div> {/*Pass down TaskPopUp through ToDo using props*/}
+                </div>
+                    <div className='flex text-lg text-gray-700 pl-3 pb-1'>
+                    Comments:
+                    </div>
 
-                    <div className="allCommenntsContainer overflow-hidden h-50 w-8/10  text-gray-700 p-3 rounded-xl overflow-y-auto h-40">
+                    <div className="allCommenntsContainer overflow-hidden text-md h-20 w-8/10 pl-8 pr-1 text-slate-50 rounded-xl overflow-y-auto h-40">
                         {allComments}
-                        {/* Example comment<br/>
-                        Example comment<br/>
-                        Example comment<br/> */}
                     </div>
-
+                <div className="absolute bottom-1 left-0 right-0 pl-4 pr-4 pb-3">
+                    <form onSubmit={addComment}
+                            className='flex justify-between items-end'>
+                        <input type="text" className="commentInput rounded-xl w-3/4 h-10 pl-3" 
+                        value={commentBody} 
+                        placeholder='Enter comment'
+                        onChange={(e) => setCommentBody(e.target.value)}>
+                        </input>
+                        <button className='bg-black w-1/6 flex flex-col justify-center items-center rounded-2x1 right-50 h-10 text-xs'>Post Comment</button>
+                    </form>
+                </div>
                 
-                <form onSubmit={addComment}
-                        className='flex justify-end'>
-                    <input type="text" className="commentInput relative bottom-0 left-6 rounded-xl w-full h-24" 
-                    value={commentBody} 
-                    placeholder='Enter comment'
-                    onChange={(e) => setCommentBody(e.target.value)}>
-                    </input>
-                    <div className='flex justify-end items-end pr-3 pt-3'>
-                        <button className='bg-black w-1/2 flex flex-col items-center rounded-2x1 right-50'>Post Comment</button>
-                    </div>
-                </form>
             </div>
         </div>
     ) : '';
